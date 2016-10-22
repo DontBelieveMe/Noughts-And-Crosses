@@ -1,0 +1,8 @@
+I:\Software Europe\NoughtsAndCrosses\NoughtsAndCrosses\bin\Release\NoughtsAndCrosses.exe.config
+I:\Software Europe\NoughtsAndCrosses\NoughtsAndCrosses\bin\Release\NoughtsAndCrosses.exe
+I:\Software Europe\NoughtsAndCrosses\NoughtsAndCrosses\bin\Release\NoughtsAndCrosses.pdb
+I:\Software Europe\NoughtsAndCrosses\NoughtsAndCrosses\obj\Release\NoughtsAndCrosses.Properties.Resources.resources
+I:\Software Europe\NoughtsAndCrosses\NoughtsAndCrosses\obj\Release\NoughtsAndCrosses.csproj.GenerateResource.Cache
+I:\Software Europe\NoughtsAndCrosses\NoughtsAndCrosses\obj\Release\NoughtsAndCrosses.exe
+I:\Software Europe\NoughtsAndCrosses\NoughtsAndCrosses\obj\Release\NoughtsAndCrosses.pdb
+I:\Software Europe\NoughtsAndCrosses\NoughtsAndCrosses\obj\Release\NoughtsAndCrosses.csprojResolveAssemblyReference.cache
