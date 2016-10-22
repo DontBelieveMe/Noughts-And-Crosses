@@ -1,7 +1,5 @@
 ﻿using System.Drawing;
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
+using System.Media;
 
 namespace NoughtsAndCrosses
 {
@@ -102,7 +100,8 @@ namespace NoughtsAndCrosses
                 tiles[snappedX, snappedY].Opacity = 100;
                 indicator.Opacity = 0;
                 return;
-            } else
+            }
+            else
             {
                 for (int x = 0; x < 3; x++)
                     for (int y = 0; y < 3; y++)
@@ -135,6 +134,9 @@ namespace NoughtsAndCrosses
                 tiles[snappedX, snappedY] = new Cross(snappedX, snappedY);
             else if(playerType == ObjectType.Nought)
                 tiles[snappedX, snappedY] = new Nought(snappedX, snappedY);
+
+            SoundPlayer soundPlayer = new SoundPlayer(Properties.Resources.Place);
+            soundPlayer.Play();
 
             if (SomebodyWon())
                 return;

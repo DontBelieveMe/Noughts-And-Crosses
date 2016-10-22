@@ -25,6 +25,7 @@ namespace NoughtsAndCrosses
             MinimizeBox = false;
             BackColor = Color.LightCyan;
             
+            Icon = Properties.Resources.Icon;
             Click += new EventHandler(OnClick);
 
             timer.Interval = 1000 / 60; // Tick at 60 FPS

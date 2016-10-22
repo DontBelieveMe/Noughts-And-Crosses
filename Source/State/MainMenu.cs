@@ -30,7 +30,7 @@ namespace NoughtsAndCrosses
 
             g.DrawString("Noughts and crosses", Game.Font, Game.FontColor, 150, 50, formatter);
             g.DrawString("Singleplayer (AI) [Press G]", Game.Font, Game.FontColor, 150, 250, formatter);
-            g.DrawString("Multiplayer (Two humans) [Press B]", Game.Font, Game.FontColor, 150, 300, formatter);
+            //g.DrawString("Multiplayer (Two humans) [Press B]", Game.Font, Game.FontColor, 150, 300, formatter);
         }
     }
 }
