@@ -54,7 +54,7 @@ namespace NoughtsAndCrosses
             Winner result = winLoose.Evaluate(this);
             if (result != Winner.Continue)
             {
-                Pause pause = new Pause(.5);
+                new Pause(.5);
                 State.AddNew(new GameOver());
                 GetState<GameOver>().Winner = result;
                 GotoNextState();

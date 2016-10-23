@@ -58,7 +58,7 @@ namespace NoughtsAndCrosses
 
             g.DrawLine(pen, 
                 new Point(IndexX * Size + brushWidth * 2, (IndexY * Size) + (Size - brushWidth*2)), 
-                new Point((IndexX * Size) + (100 - brushWidth*2), IndexY * Size + brushWidth * 2));
+                new Point((IndexX * Size) + (Size - brushWidth*2), IndexY * Size + brushWidth * 2));
 
             pen.Dispose();
         }

@@ -13,22 +13,24 @@ namespace NoughtsAndCrosses
         private Action<Point> onMouseMove;
 
         private Timer timer = new Timer();
-
+		
         public Window(int width, int height, string title)
         {
             Text = title;
-            Width = width;
-            Height = height;
-
+            this.Width = width;
+            this.Height = height;
+			
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
             BackColor = Color.LightCyan;
             
-            Icon = Properties.Resources.Icon;
+			//Icon = Properties.Resources.Icon;
+				
             Click += new EventHandler(OnClick);
-
-            timer.Interval = 1000 / 60; // Tick at 60 FPS
+			
+			int fps = 60;
+            timer.Interval = 1000 / fps; // Tick at 60 FPS (16.6.... ms per frame)
             timer.Tick += new EventHandler(OnTick);
 
             DoubleBuffered = true;

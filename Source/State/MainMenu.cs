@@ -10,9 +10,9 @@ namespace NoughtsAndCrosses
 {
     public class MainMenu : State
     {
-        private Label title = new Label("Noughts and Crosses", 150, 150, Label.DefaultColor);
-        private Label singlePlayer = new Label("Singleplayer (AI)", 150, 250, Label.DefaultColor);
-        private Label multiPlayer = new Label("Multiplayer", 150, 275, Label.DefaultColor);
+        private Label title = new Label("Noughts and Crosses", Global.BoardCentre, Global.BoardCentre, Label.DefaultColor);
+        private Label singlePlayer = new Label("Singleplayer (AI)", Global.BoardCentre, Global.BoardCentre + 100, Label.DefaultColor);
+        private Label multiPlayer = new Label("Multiplayer", Global.BoardCentre, Global.BoardCentre + 125, Label.DefaultColor);
 
         protected override void KeyPressed(Keys keyData)
         {
@@ -49,14 +49,13 @@ namespace NoughtsAndCrosses
         {
             if(singlePlayer.Contains(location))
             {
-                State.AddNew(new Singleplayer(300, 300));
+                State.AddNew(new Singleplayer(Global.BoardWidth, Global.BoardHeight));
                 GotoNextState();
             } else if(multiPlayer.Contains(location))
             {
-                State.AddNew(new Multiplayer(300, 300));
+                State.AddNew(new Multiplayer(Global.BoardWidth, Global.BoardHeight));
                 GotoNextState();
             }
-
         }
     }
 }

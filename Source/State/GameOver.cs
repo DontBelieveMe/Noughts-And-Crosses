@@ -12,8 +12,8 @@ namespace NoughtsAndCrosses
     {
         public Winner Winner { set; get; }
 
-        private Label clickToContinue = new Label("Click to continue", 150, 250, Label.DefaultColor);
-        private Label wonLabel = new Label("", 150, 150, Label.DefaultColor);
+        private Label clickToContinue = new Label("Click to continue", Global.BoardCentre, Global.BoardCentre + 100, Label.DefaultColor);
+        private Label wonLabel = new Label("", Global.BoardCentre, Global.BoardCentre, Label.DefaultColor);
 
         public GameOver(): base()
         {

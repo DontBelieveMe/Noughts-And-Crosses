@@ -12,7 +12,7 @@ namespace NoughtsAndCrosses
         {
             turn = WhooseTurn.PlayerTwo;
 
-            Pause pause = new Pause(1);
+            new Pause(1);
             AI ai = new AI();
             ai.Execute(this);
 
@@ -25,7 +25,7 @@ namespace NoughtsAndCrosses
             Winner result = winLoose.Evaluate(this);
             if (result != Winner.Continue)
             {
-                Pause pause = new Pause(.5);
+                new Pause(.5);
                 State.AddNew(new GameOver());
                 GetState<GameOver>().Winner = result;
                 GotoNextState();

@@ -1,6 +1,6 @@
 ﻿/*
 TODO:
-    - Two player
+	- Centralize widths and heights
 */
 
 using System;
@@ -18,7 +18,12 @@ namespace NoughtsAndCrosses
 
         public Game()
         {
-            Window = new Window(315, 375, "Noughts and Crosses");
+			int width = 300, height = 375;
+			if(Environment.OSVersion.Platform == PlatformID.Win32Windows)
+			{
+				width += 15;
+			}
+			Window = new Window(width, height, "Noughts and Crosses");
 
             Window.SetPaintFunction(State.Draw);
             Window.SetTickFunction(State.Update);
