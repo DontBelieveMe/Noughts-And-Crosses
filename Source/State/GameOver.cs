@@ -10,7 +10,10 @@ namespace NoughtsAndCrosses
 {
     public class GameOver : State
     {
-        public string Winner { set; get; }
+        public Winner Winner { set; get; }
+
+        private Label clickToContinue = new Label("Click to continue", 150, 250, Label.DefaultColor);
+        private Label wonLabel = new Label("", 150, 150, Label.DefaultColor);
 
         public GameOver(): base()
         {
@@ -18,10 +21,13 @@ namespace NoughtsAndCrosses
 
         protected override void KeyPressed(Keys keyData)
         {
-            if(keyData == Keys.Space)
-            {
-                GotoFirstState();
-            }
+        }
+
+        protected override void OnClick(Point location)
+        {
+            State.ClearStack();
+            State.AddNew(new MainMenu());
+            GotoFirstState();
         }
 
         protected override void Render(Graphics g)
@@ -30,10 +36,27 @@ namespace NoughtsAndCrosses
             StringFormat formatter = new StringFormat();
             formatter.LineAlignment = StringAlignment.Center;
             formatter.Alignment = StringAlignment.Center;
-            
-            // TODO: Use the global widths/heights
-            g.DrawString(Winner, Game.Font, Game.FontColor, 150, 150, formatter);
-            g.DrawString("Press space to continue...", Game.Font, Game.FontColor, 150, 250, formatter);
+            string whooseWon = "";
+            switch (Winner)
+            {
+                case Winner.PlayerOne:
+                    whooseWon = "Player One Won!";
+                    break;
+                case Winner.PlayerTwo:
+                    whooseWon = "Player Two Won!";
+                    break;
+                case Winner.Draw:
+                    whooseWon = "Its a Draw!";
+                    break;
+                default:
+                    System.Diagnostics.Debug.Assert(false);
+                    break;
+            }
+
+            wonLabel.Text = whooseWon;
+
+            wonLabel.Draw(g);
+            clickToContinue.Draw(g);
         }
     }
 }

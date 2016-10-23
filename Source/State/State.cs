@@ -63,5 +63,6 @@ namespace NoughtsAndCrosses
         public static void ProcessClick(Point location) { currentState.OnClick(location); }
         public static void ProcessKeyDown(Keys keys) { currentState.KeyPressed(keys); }
         public static void ProcessMouseMove(Point location) { currentState.MouseMove(location); }
+        public static void ClearStack() { states.Clear(); currentState = new EmptyState(); }
     }
 }

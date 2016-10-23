@@ -10,27 +10,53 @@ namespace NoughtsAndCrosses
 {
     public class MainMenu : State
     {
+        private Label title = new Label("Noughts and Crosses", 150, 150, Label.DefaultColor);
+        private Label singlePlayer = new Label("Singleplayer (AI)", 150, 250, Label.DefaultColor);
+        private Label multiPlayer = new Label("Multiplayer", 150, 275, Label.DefaultColor);
+
         protected override void KeyPressed(Keys keyData)
         {
-            if(keyData.HasFlag(Keys.G))
-            {
-                GotoNextState();
-            }
-            else if(keyData.HasFlag(Keys.B))
-            {
-                GotoNextState();
-            }
         }
 
         protected override void Render(Graphics g)
         {
-            StringFormat formatter = new StringFormat();
-            formatter.LineAlignment = StringAlignment.Center;
-            formatter.Alignment = StringAlignment.Center;
+            title.Draw(g);
+            singlePlayer.Draw(g);
+            multiPlayer.Draw(g);
+        }
 
-            g.DrawString("Noughts and crosses", Game.Font, Game.FontColor, 150, 50, formatter);
-            g.DrawString("Singleplayer (AI) [Press G]", Game.Font, Game.FontColor, 150, 250, formatter);
-            //g.DrawString("Multiplayer (Two humans) [Press B]", Game.Font, Game.FontColor, 150, 300, formatter);
+        protected override void MouseMove(Point location)
+        {
+            if(singlePlayer.Contains(location))
+            {
+                singlePlayer.ChangeSize(singlePlayer.StartSize + 1);
+            } else
+            {
+                singlePlayer.ResetFont();
+            }
+
+            if (multiPlayer.Contains(location))
+            {
+                multiPlayer.ChangeSize(multiPlayer.StartSize + 1);
+            }
+            else
+            {
+                multiPlayer.ResetFont();
+            }
+        }
+
+        protected override void OnClick(Point location)
+        {
+            if(singlePlayer.Contains(location))
+            {
+                State.AddNew(new Singleplayer(300, 300));
+                GotoNextState();
+            } else if(multiPlayer.Contains(location))
+            {
+                State.AddNew(new Multiplayer(300, 300));
+                GotoNextState();
+            }
+
         }
     }
 }

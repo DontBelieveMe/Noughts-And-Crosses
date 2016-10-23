@@ -1,25 +1,26 @@
 ﻿using System.Drawing;
 using System.Media;
+using System.Windows.Forms;
 
 namespace NoughtsAndCrosses
 {
     public class GameBoard : State
     {
-        private enum WhooseTurn
+        protected enum WhooseTurn
         {
             PlayerOne, PlayerTwo
         };
 
         public Winner LastWinner = Winner.Continue;
-        private WhooseTurn turn = WhooseTurn.PlayerOne;
-        private ObjectType playerType = ObjectType.Cross;
+        protected WhooseTurn turn = WhooseTurn.PlayerOne;
+        protected ObjectType playerType = ObjectType.Cross;
 
-        private int width, height;
-        private const int tileSize = 100;
-        private const int boardSize = 3;
-        
-        private Object[,] tiles = new Object[3, 3];
-        private Cross indicator = new Cross(0, 0);
+        protected int width, height;
+        protected const int tileSize = 100;
+        protected const int boardSize = 3;
+
+        protected Object[,] tiles = new Object[3, 3];
+        protected Object indicator = new Cross(0, 0);
 
         public GameBoard(int width, int height): base()
         {
@@ -46,6 +47,8 @@ namespace NoughtsAndCrosses
             g.FillRectangle(brush, 100, 100, 100, 100);
         }
 
+        protected virtual void RenderTurnString(Graphics g) { }
+
         protected override void Render(Graphics g)
         {
             RenderGrid(g);
@@ -59,23 +62,13 @@ namespace NoughtsAndCrosses
                         tile.Render(g);
                 }
             }
-
-            string whooseTurn = (turn == WhooseTurn.PlayerOne) ? "Player One's turn (" + playerType + ")" : "Player Two's turn (" + PlayerTwoType() + ") Thinking...";
-            g.DrawString(whooseTurn, Game.Font, Game.FontColor, 5, 320);
+            RenderTurnString(g);
+            
 
             indicator.Render(g);
         }
 
-        private void RunAI()
-        {
-            turn = WhooseTurn.PlayerTwo;
-
-            Pause pause = new Pause(1);
-            AI ai = new AI();
-            ai.Execute(this);
-
-            turn = WhooseTurn.PlayerOne;
-        }
+        
 
         protected override void MouseMove(Point location)
         {
@@ -83,9 +76,9 @@ namespace NoughtsAndCrosses
             if (location.Y >= height)
                 return;
 
-            // Don't allow clicks if the AI is 'thinking'
-            if (turn == WhooseTurn.PlayerTwo)
-                return;
+            //// Don't allow clicks if the AI is 'thinking'
+            //if (turn == WhooseTurn.PlayerTwo)
+            //    return;
 
             int snappedX = location.X / 100;
             int snappedY = location.Y / 100;
@@ -98,6 +91,7 @@ namespace NoughtsAndCrosses
                             tiles[x, y].Opacity = 255;
                                 
                 tiles[snappedX, snappedY].Opacity = 100;
+                
                 indicator.Opacity = 0;
                 return;
             }
@@ -114,53 +108,7 @@ namespace NoughtsAndCrosses
             indicator.IndexY = snappedY;
         }
 
-        protected override void OnClick(Point point)
-        {
-            // Don't handle GUI clicks.
-            if (point.Y > height)
-                return;
-
-            // Don't allow clicks if the AI is 'thinking'
-            if (turn == WhooseTurn.PlayerTwo)
-                return;
-
-            int snappedX = point.X / 100;
-            int snappedY = point.Y / 100;
-
-            if (TileAt(snappedX, snappedY))
-                return;
-
-            if(playerType == ObjectType.Cross)
-                tiles[snappedX, snappedY] = new Cross(snappedX, snappedY);
-            else if(playerType == ObjectType.Nought)
-                tiles[snappedX, snappedY] = new Nought(snappedX, snappedY);
-
-            SoundPlayer soundPlayer = new SoundPlayer(Properties.Resources.Place);
-            soundPlayer.Play();
-
-            if (SomebodyWon())
-                return;
-
-            RunAI();
-
-            if (SomebodyWon())
-                return;
-        }
-        
-        private bool SomebodyWon()
-        {
-            EvaluateWinLoose winLoose = new EvaluateWinLoose();
-            Winner result = winLoose.Evaluate(this);
-            if (result != Winner.Continue)
-            {
-                Pause pause = new Pause(.5);
-                GetState<GameOver>().Winner = result.ToString();
-                GotoNextState();
-                return true;
-            }
-
-            return false;
-        }
+        protected virtual bool SomebodyWon() { return false; }
 
         public Object         GetTile(int indexX, int indexY) { return tiles[indexX, indexY]; }
         public bool           TileAt(int indexX, int indexY)

@@ -27,9 +27,7 @@ namespace NoughtsAndCrosses
             Window.SetMoveMoveFunction(State.ProcessMouseMove);
 
             State.AddNew(new MainMenu());
-            State.AddNew(new GameBoard(300, 300));
-            State.AddNew(new GameOver());
-
+            
             State.Start();
         }
 
