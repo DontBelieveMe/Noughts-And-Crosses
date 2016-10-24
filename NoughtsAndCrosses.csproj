@@ -50,6 +50,7 @@
     <Compile Include="Source\Game\EvaluateWinLoose.cs" />
     <Compile Include="Source\Game\Multiplayer.cs" />
     <Compile Include="Source\Game\Singleplayer.cs" />
+    <Compile Include="Source\Global.cs" />
     <Compile Include="Source\Label.cs" />
     <Compile Include="Source\Pause.cs" />
     <Compile Include="Source\State\GameOver.cs" />
