@@ -16,10 +16,11 @@ namespace NoughtsAndCrosses
         protected ObjectType playerType = ObjectType.Cross;
 
         protected int width, height;
-        protected const int tileSize = 100;
-        protected const int boardSize = 3;
+        protected const int boardSize = Global.BoardWidth / Global.TileSize;
+		protected const int tileSize = Global.TileSize;
+		
 
-        protected Object[,] tiles = new Object[3, 3];
+        protected Object[,] tiles = new Object[boardSize, boardSize];
         protected Object indicator = new Cross(0, 0);
 
         public GameBoard(int width, int height): base()
@@ -44,7 +45,7 @@ namespace NoughtsAndCrosses
             }
 
             // Draw centre tile
-            g.FillRectangle(brush, 100, 100, 100, 100);
+            g.FillRectangle(brush, 100, 100, tileSize, tileSize);
         }
 
         protected virtual void RenderTurnString(Graphics g) { }
@@ -53,9 +54,9 @@ namespace NoughtsAndCrosses
         {
             RenderGrid(g);
 
-            for (int y = 0; y < 3; y++)
+            for (int y = 0; y < boardSize; y++)
             {
-                for (int x = 0; x < 3; x++)
+                for (int x = 0; x < boardSize; x++)
                 {
                     var tile = tiles[x, y];
                     if (TileAt(x, y))
@@ -80,13 +81,13 @@ namespace NoughtsAndCrosses
             //if (turn == WhooseTurn.PlayerTwo)
             //    return;
 
-            int snappedX = location.X / 100;
-            int snappedY = location.Y / 100;
+            int snappedX = location.X / Global.TileSize;
+            int snappedY = location.Y / Global.TileSize;
             
             if(TileAt(snappedX, snappedY))
             {
-                for (int x = 0; x < 3; x++)
-                    for (int y = 0; y < 3; y++)
+                for (int x = 0; x < boardSize; x++)
+                    for (int y = 0; y < boardSize; y++)
                         if (TileAt(x, y) && tiles[x, y].Opacity != 255)
                             tiles[x, y].Opacity = 255;
                                 
@@ -97,8 +98,8 @@ namespace NoughtsAndCrosses
             }
             else
             {
-                for (int x = 0; x < 3; x++)
-                    for (int y = 0; y < 3; y++)
+                for (int x = 0; x < boardSize; x++)
+                    for (int y = 0; y < boardSize; y++)
                         if(TileAt(x, y))
                             tiles[x, y].Opacity = 255;
                 indicator.Opacity = 200;
@@ -177,7 +178,7 @@ namespace NoughtsAndCrosses
 
         protected override void Reset()
         {
-            tiles = new Object[3, 3];
+            tiles = new Object[boardSize, boardSize];
         }
     }
 }

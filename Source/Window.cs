@@ -25,6 +25,9 @@ namespace NoughtsAndCrosses
             MinimizeBox = false;
             BackColor = Color.LightCyan;
             
+			// Commented out for Mono compatibility.
+			// Temporary
+			// ...Hopefully...
 			//Icon = Properties.Resources.Icon;
 				
             Click += new EventHandler(OnClick);

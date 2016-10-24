@@ -23,7 +23,22 @@ namespace NoughtsAndCrosses
             Score = score;
         }
     };
-
+	
+	/*
+	 * AI is based on the minimax algorithm
+	 * as described here http://neverstopbuilding.com/minimax 
+	 * The AI should be unbeatable - the best we can do is draw
+	 * as it can compute evrey single move and evaluate the best one
+	 * based on a score system - each potential move is given a score
+	 * and the combination of moves that yeilds the best overall score
+	 * will be the one taken.
+	 * 
+	 * Depth is there to prevent the AI from being fatalistic
+	 * It should never be nessersary as the AI _should_ ensure that
+	 * the human player can place down the correct combination of moves
+	 * that results meaning that human player _will_ always win.
+	 * But it it is there just to make the algorithm "perfect".
+	*/ 
     public class AI
     {
         private static int depth = 0;
