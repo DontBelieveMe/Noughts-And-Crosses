@@ -51,12 +51,13 @@ namespace NoughtsAndCrosses
         
         private AIMove CalculateScore(GameBoard board, Winner winner)
         {
+			Random random = new Random();
             switch (winner)
             {
                 case Winner.PlayerOne:
-                    return new AIMove((10 - depth));
+                    return new AIMove(-10 - random.Next(0, Global.AIDifficulty * 10));
                 case Winner.PlayerTwo:
-                    return new AIMove((depth - 10));
+                    return new AIMove(10 + random.Next(-(Global.AIDifficulty * 10), 0));
                 case Winner.Draw:
                     return new AIMove(0);
             }
@@ -75,7 +76,7 @@ namespace NoughtsAndCrosses
             depth += 1;
 
             List<AIMove> moves = new List<AIMove>();
-
+			
             for(int y = 0; y < board.TileBoardSize(); y++)
             {
                 for(int x = 0; x < board.TileBoardSize(); x++)

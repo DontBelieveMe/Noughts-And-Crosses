@@ -82,6 +82,10 @@
     <Compile Include="..\..\Source\State\State.cs">
       <Link>Source\State\State.cs</Link>
     </Compile>
+    <Compile Include="Source\State\Difficulty.cs" />
+    <Compile Include="..\..\Source\State\Difficulty.cs">
+      <Link>Source\Game\Difficulty.cs</Link>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
