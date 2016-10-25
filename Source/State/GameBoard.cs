@@ -76,10 +76,6 @@ namespace NoughtsAndCrosses
             if (location.Y >= height)
                 return;
 
-            //// Don't allow clicks if the AI is 'thinking'
-            //if (turn == WhooseTurn.PlayerTwo)
-            //    return;
-
             int snappedX = location.X / 100;
             int snappedY = location.Y / 100;
             

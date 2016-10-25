@@ -18,11 +18,13 @@ namespace NoughtsAndCrosses
 
         public Game()
         {
-			int width = 300, height = 375;
-			if(Environment.OSVersion.Platform == PlatformID.Win32Windows)
+			int width = 315, height = 375;
+
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
 			{
-				width += 15;
+				width = 300;
 			}
+
 			Window = new Window(width, height, "Noughts and Crosses");
 
             Window.SetPaintFunction(State.Draw);
