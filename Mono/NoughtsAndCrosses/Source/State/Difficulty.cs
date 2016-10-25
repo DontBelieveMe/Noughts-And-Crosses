@@ -6,7 +6,7 @@ namespace NoughtsAndCrosses
 	public class Difficulty : State
 	{
 		private Label levelOne = new Label("Level One", Global.BoardCentre, Global.BoardCentre, Label.DefaultColor);
-		private Label unbeatable = new Label("UNBEATABLE", Global.BoardCentre, Global.BoardCentre + 55, Label.DefaultColor);
+		private Label unbeatable = new Label("UNBEATABLE", Global.BoardCentre, Global.BoardCentre + 55, Color.DarkRed);
 		private Label levelTwo = new Label("Level Two", Global.BoardCentre, Global.BoardCentre + 25, Label.DefaultColor);
 		
 		public Difficulty()
@@ -18,7 +18,7 @@ namespace NoughtsAndCrosses
 			                   
 		private void levelTwoClicked()
 		{
-			Global.AIDifficulty = 10;
+			Global.AIDifficulty = 7;
 			AddNew(new Singleplayer(300, 300));
 			GotoNextState();
 		}
@@ -32,7 +32,7 @@ namespace NoughtsAndCrosses
 		
 		private void levelOneClicked() 
 		{
-			Global.AIDifficulty = 20;
+			Global.AIDifficulty = 15;
 			AddNew(new Singleplayer(300, 300));
 			GotoNextState();
 		}
@@ -53,8 +53,14 @@ namespace NoughtsAndCrosses
 		
 		protected override void MouseMove (Point location)
 		{
+			if(unbeatable.Contains(location)) {
+				unbeatable.MoveMove(location);
+				unbeatable.Underline();	
+			} else {
+				unbeatable.ResetFont();	
+			}
+			
 			levelOne.MoveMove(location);
-			unbeatable.MoveMove(location);
 			levelTwo.MoveMove(location);
 		}
 	}
