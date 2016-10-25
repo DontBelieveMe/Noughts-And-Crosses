@@ -13,7 +13,23 @@ namespace NoughtsAndCrosses
         private Label title = new Label("Noughts and Crosses", Global.BoardCentre, Global.BoardCentre, Label.DefaultColor);
         private Label singlePlayer = new Label("Singleplayer (AI)", Global.BoardCentre, Global.BoardCentre + 100, Label.DefaultColor);
         private Label multiPlayer = new Label("Multiplayer", Global.BoardCentre, Global.BoardCentre + 125, Label.DefaultColor);
-
+		
+		private void singlePlayerClicked() {
+			AddNew(new Difficulty());
+			GotoNextState();
+		}
+		
+		private void multiPlayerClicked() {
+			AddNew(new Multiplayer(300, 300));
+			GotoNextState();
+		}
+		
+		public MainMenu()
+		{
+			singlePlayer = singlePlayer.SetButton(singlePlayerClicked);	
+			multiPlayer = multiPlayer.SetButton(multiPlayerClicked);
+		}
+		
         protected override void KeyPressed(Keys keyData)
         {
         }
@@ -27,35 +43,14 @@ namespace NoughtsAndCrosses
 
         protected override void MouseMove(Point location)
         {
-            if(singlePlayer.Contains(location))
-            {
-                singlePlayer.ChangeSize(singlePlayer.StartSize + 1);
-            } else
-            {
-                singlePlayer.ResetFont();
-            }
-
-            if (multiPlayer.Contains(location))
-            {
-                multiPlayer.ChangeSize(multiPlayer.StartSize + 1);
-            }
-            else
-            {
-                multiPlayer.ResetFont();
-            }
+            singlePlayer.MoveMove(location);
+			multiPlayer.MoveMove(location);	
         }
 
         protected override void OnClick(Point location)
         {
-            if(singlePlayer.Contains(location))
-            {
-                State.AddNew(new Singleplayer(Global.BoardWidth, Global.BoardHeight));
-                GotoNextState();
-            } else if(multiPlayer.Contains(location))
-            {
-                State.AddNew(new Multiplayer(Global.BoardWidth, Global.BoardHeight));
-                GotoNextState();
-            }
+            singlePlayer.MouseClick(location);
+			multiPlayer.MouseClick(location);
         }
     }
 }

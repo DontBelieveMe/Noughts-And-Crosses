@@ -1,0 +1,20 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../Source/State/GameBoard.cs">
+    <Files>
+      <File FileName="../../Source/Game/AI.cs" Line="15" Column="36" />
+      <File FileName="../../Source/Game/EvaluateWinLoose.cs" Line="1" Column="1" />
+      <File FileName="../../Source/Game/Multiplayer.cs" Line="68" Column="1" />
+      <File FileName="../../Source/State/Global.cs" Line="11" Column="15" />
+      <File FileName="../../Source/Game/Objects.cs" Line="24" Column="45" />
+      <File FileName="../../Source/Game/Singleplayer.cs" Line="55" Column="53" />
+      <File FileName="../../Source/Game/TileContainer3.cs" Line="28" Column="6" />
+      <File FileName="../../Source/State/Game.cs" Line="5" Column="1" />
+      <File FileName="../../Source/State/GameBoard.cs" Line="21" Column="3" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

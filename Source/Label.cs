@@ -23,6 +23,16 @@ namespace NoughtsAndCrosses
             get; private set;
         }
         
+		private bool isButton = false;
+		private Action OnClick;
+		
+		public Label SetButton(Action clickCallback)
+		{
+			isButton = true;
+			OnClick = clickCallback;
+			return this;
+		}
+		
         private Brush brush;
         private StringAlignment alignment = StringAlignment.Center;
 
@@ -74,6 +84,26 @@ namespace NoughtsAndCrosses
         {
             font = new Font(font, DefaultFont.Style);
             ChangeSize(StartSize);
-        }  
+        }
+		
+		public void MoveMove(Point location) {
+			if(!isButton)
+				return;
+			
+			if(Contains(location)) {
+				ChangeSize(StartSize + 1);	
+			} else {
+				ResetFont();	
+			}
+		}
+		
+		public void MouseClick(Point location) {
+			if(!isButton)
+				return;
+			
+			if(Contains(location)) {
+				OnClick();	
+			}
+		}
     }
 }

@@ -23,7 +23,22 @@ namespace NoughtsAndCrosses
             Score = score;
         }
     };
-
+	
+	/*
+	 * AI is based on the minimax algorithm
+	 * as described here http://neverstopbuilding.com/minimax 
+	 * The AI should be unbeatable - the best we can do is draw
+	 * as it can compute evrey single move and evaluate the best one
+	 * based on a score system - each potential move is given a score
+	 * and the combination of moves that yeilds the best overall score
+	 * will be the one taken.
+	 * 
+	 * Depth is there to prevent the AI from being fatalistic
+	 * It should never be nessersary as the AI _should_ ensure that
+	 * the human player can place down the correct combination of moves
+	 * that results meaning that human player _will_ always win.
+	 * But it it is there just to make the algorithm "perfect".
+	*/ 
     public class AI
     {
         private static int depth = 0;
@@ -36,12 +51,13 @@ namespace NoughtsAndCrosses
         
         private AIMove CalculateScore(GameBoard board, Winner winner)
         {
+			Random random = new Random();
             switch (winner)
             {
                 case Winner.PlayerOne:
-                    return new AIMove((10 - depth));
+                    return new AIMove(-10 - random.Next(0, Global.AIDifficulty * 10));
                 case Winner.PlayerTwo:
-                    return new AIMove((depth - 10));
+                    return new AIMove(10 + random.Next(-(Global.AIDifficulty * 10), 0));
                 case Winner.Draw:
                     return new AIMove(0);
             }
@@ -60,7 +76,7 @@ namespace NoughtsAndCrosses
             depth += 1;
 
             List<AIMove> moves = new List<AIMove>();
-
+			
             for(int y = 0; y < board.TileBoardSize(); y++)
             {
                 for(int x = 0; x < board.TileBoardSize(); x++)

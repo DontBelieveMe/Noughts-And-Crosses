@@ -25,8 +25,8 @@ namespace NoughtsAndCrosses
                 return;
 
             
-            int snappedX = point.X / 100;
-            int snappedY = point.Y / 100;
+            int snappedX = point.X / Global.TileSize;
+            int snappedY = point.Y / Global.TileSize;
 
             if (TileAt(snappedX, snappedY))
                 return;

@@ -1,12 +1,16 @@
 
 namespace NoughtsAndCrosses
 {
-	public class Global
+	public static class Global
 	{
-		public static int BoardWidth = 300;
-		public static int BoardHeight = 300;
+		public const int BoardWidth  = 300;
+		public const int BoardHeight = 300;
+		public const int TileSize    = 100;
 		
-		public static int BoardCentre = Global.BoardWidth / 2;
+		public static int AIDifficulty = -1;
+		
+		// Whoah, whoah! I can't believe i'm being so bad!
+		public const int BoardCentre = Global.BoardWidth / 2;
 	}
 }
 

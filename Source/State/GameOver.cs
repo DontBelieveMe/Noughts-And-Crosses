@@ -25,7 +25,7 @@ namespace NoughtsAndCrosses
 
         protected override void OnClick(Point location)
         {
-            State.ClearStack();
+			State.ClearStack();
             State.AddNew(new MainMenu());
             GotoFirstState();
         }

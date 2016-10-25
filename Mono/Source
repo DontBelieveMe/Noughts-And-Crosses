@@ -1,0 +1,12 @@
+using System;
+
+namespace NoughtsAndCrosses
+{
+	public class Difficulty : State
+	{
+		public Difficulty ()
+		{
+		}
+	}
+}
+

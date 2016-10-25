@@ -21,7 +21,7 @@ namespace NoughtsAndCrosses
 
         public Object() { }
 
-        protected int Size = 100;
+        protected int Size = Global.TileSize;
 
         public int Opacity { get; set; }
         public Brush Brush { get; set; }
