@@ -44,6 +44,16 @@ namespace NoughtsAndCrosses
             currentState = states[currentState.index + 1];
         }
 
+        protected void GotoPreviousState()
+        {
+            // CRASH
+            if (currentState.index == 0)
+                return;
+
+            currentState.Reset();
+            currentState = states[currentState.index - 1];
+        }
+
         protected void GotoFirstState()
         {
             currentState = states[0];

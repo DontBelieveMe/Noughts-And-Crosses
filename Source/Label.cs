@@ -7,6 +7,16 @@ using System.Drawing;
 
 namespace NoughtsAndCrosses
 {
+    [Flags]
+    public enum ButtonAnimation
+    {
+        SlideOffRight  = 0,
+        SlideOffLeft   = 1,
+        HoverShake     = 4,
+        None           = 8,
+        HoverUnderline = 16
+    }
+    
     public class Label
     {
         public static Font DefaultFont = new Font("Consolas", 10, FontStyle.Bold);
@@ -18,31 +28,39 @@ namespace NoughtsAndCrosses
         public Point Position { get; private set; }
         public int Size { get { return (int)font.Size; } }
 
-        public int StartSize
-        {
-            get; private set;
-        }
-        
-		private bool isButton = false;
+        public int StartSize { get; private set; }
+        private bool isButton = false;
+        private ButtonAnimation animationArgs = ButtonAnimation.None;
+
 		private Action OnClick;
-		
-		public Label SetButton(Action clickCallback)
-		{
-			isButton = true;
-			OnClick = clickCallback;
-			return this;
-		}
-		
-        private Brush brush;
+		private Brush brush;
         private StringAlignment alignment = StringAlignment.Center;
 
         public Rectangle Bounds;
+        private Point InitalPos;
+
+        public void Tick()
+        {
+            if (Bounds.Contains(Global.MousePos))
+            {
+                if (animationArgs.HasFlag(ButtonAnimation.HoverShake))
+                {
+                    TimeSpan time = DateTime.Now - System.Diagnostics.Process.GetCurrentProcess().StartTime;
+                    int ms = time.Milliseconds;
+
+                    // Some clever maths'y stuff
+                    int xo = (int)(Math.Sin(ms * 6 % 10000 / 1000.0 * Math.PI * 2) * 100);
+                    Position = new Point(Position.X + (xo / 50), Position.Y);
+                }
+            }
+        }
 
         public Label(string text, int x, int y, Color color)
         {
             Text = text;
             Position = new Point(x, y);
             Bounds = new Rectangle(x, y, 0, 0);
+            InitalPos = new Point(Position.X, Position.Y);
 
             brush = new SolidBrush(color);
             StartSize = (int) font.Size;
@@ -85,25 +103,79 @@ namespace NoughtsAndCrosses
             font = new Font(font, DefaultFont.Style);
             ChangeSize(StartSize);
         }
-		
-		public void MoveMove(Point location) {
-			if(!isButton)
+
+        public void ResetPosition()
+        {
+            Position = InitalPos;
+        }
+
+       public void MouseMove(Point location) {
+            if(!isButton)
 				return;
-			
-			if(Contains(location)) {
-				ChangeSize(StartSize + 1);	
+
+            if(Contains(location)) {
+                if (animationArgs.HasFlag(ButtonAnimation.HoverUnderline))
+                    Underline();
+
+                ChangeSize(StartSize + 1);	
 			} else {
-				ResetFont();	
-			}
+                ResetFont();
+            }
 		}
 		
+        public void Move(int x, int y)
+        {
+            Position = new Point(Position.X + x, Position.Y + y);
+        }
+
 		public void MouseClick(Point location) {
 			if(!isButton)
 				return;
 			
 			if(Contains(location)) {
-				OnClick();	
+                DoClickAnimations();
+                OnClick();	
 			}
 		}
+
+        private void DoClickAnimations()
+        {
+            // Exclude just hover animations
+            if (animationArgs == ButtonAnimation.HoverUnderline || animationArgs == ButtonAnimation.HoverShake)
+                return;
+
+            if (animationArgs == ButtonAnimation.None)
+                return;
+
+            if (animationArgs.HasFlag(ButtonAnimation.SlideOffLeft))
+            {
+                
+                int bound = -((Bounds.X / 2) * 2);
+                while (Position.X > bound)
+                {
+                    Move(-1, 0);
+                    new Pause(Global.AnimationTime);
+                }
+                return;
+            } else if (animationArgs.HasFlag(ButtonAnimation.SlideOffRight))
+            {
+                while (Position.X - (Bounds.X / 2) < Global.BoardWidth)
+                {
+                    Move(1, 0);
+                    new Pause(Global.AnimationTime);
+                }
+                return;
+            }
+        }
+
+		public Label SetButton(Action clickCallback, ButtonAnimation animation = ButtonAnimation.None)
+		{
+			isButton = true;
+			OnClick = clickCallback;
+            animationArgs = animation;
+
+			return this;
+		}
+
     }
 }

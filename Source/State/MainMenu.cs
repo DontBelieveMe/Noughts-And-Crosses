@@ -13,23 +13,31 @@ namespace NoughtsAndCrosses
         private Label title = new Label("Noughts and Crosses", Global.BoardCentre, Global.BoardCentre, Label.DefaultColor);
         private Label singlePlayer = new Label("Singleplayer (AI)", Global.BoardCentre, Global.BoardCentre + 100, Label.DefaultColor);
         private Label multiPlayer = new Label("Multiplayer", Global.BoardCentre, Global.BoardCentre + 125, Label.DefaultColor);
-		
+
+        private const double animationTime = 0.002;
+
 		private void singlePlayerClicked() {
-			AddNew(new Difficulty());
+            AddNew(new Difficulty());
 			GotoNextState();
 		}
 		
 		private void multiPlayerClicked() {
-			AddNew(new Multiplayer(300, 300));
+            AddNew(new Multiplayer(300, 300));
 			GotoNextState();
 		}
 		
 		public MainMenu()
 		{
-			singlePlayer = singlePlayer.SetButton(singlePlayerClicked);	
-			multiPlayer = multiPlayer.SetButton(multiPlayerClicked);
+			singlePlayer = singlePlayer.SetButton(singlePlayerClicked, ButtonAnimation.SlideOffRight);	
+			multiPlayer = multiPlayer.SetButton(multiPlayerClicked, ButtonAnimation.SlideOffLeft);
 		}
-		
+
+        protected override void Reset()
+        {
+            singlePlayer.ResetPosition();
+            multiPlayer.ResetPosition();
+        }
+
         protected override void KeyPressed(Keys keyData)
         {
         }
@@ -43,8 +51,8 @@ namespace NoughtsAndCrosses
 
         protected override void MouseMove(Point location)
         {
-            singlePlayer.MoveMove(location);
-			multiPlayer.MoveMove(location);	
+            singlePlayer.MouseMove(location);
+			multiPlayer.MouseMove(location);	
         }
 
         protected override void OnClick(Point location)
@@ -52,5 +60,6 @@ namespace NoughtsAndCrosses
             singlePlayer.MouseClick(location);
 			multiPlayer.MouseClick(location);
         }
+        
     }
 }

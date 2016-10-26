@@ -68,6 +68,10 @@ namespace NoughtsAndCrosses
 
         private void OnTick(object sender, EventArgs args)
         {
+            Point mousePoint = new Point(MousePosition.X, MousePosition.Y);
+            mousePoint = PointToClient(mousePoint);
+            Global.MousePos = mousePoint;
+
             onTick();
             Refresh();
         }

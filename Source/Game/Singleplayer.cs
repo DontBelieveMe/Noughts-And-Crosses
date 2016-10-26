@@ -6,7 +6,10 @@ namespace NoughtsAndCrosses
 {
     public class Singleplayer : GameBoard
     {
-        public Singleplayer(int width, int height) : base(width, height) { }
+        public Singleplayer(int width, int height) : base(width, height)
+        {
+            SetPlayerType(ObjectType.Cross);
+        }
 
         private void RunAI()
         {
@@ -57,10 +60,7 @@ namespace NoughtsAndCrosses
             if (TileAt(snappedX, snappedY))
                 return;
 
-            if (playerType == ObjectType.Cross)
-                tiles[snappedX, snappedY] = new Cross(snappedX, snappedY);
-            else if (playerType == ObjectType.Nought)
-                tiles[snappedX, snappedY] = new Nought(snappedX, snappedY);
+            DeterminteObjectType(out tiles[snappedX, snappedY], snappedX, snappedY);
 
             if (SomebodyWon())
                 return;

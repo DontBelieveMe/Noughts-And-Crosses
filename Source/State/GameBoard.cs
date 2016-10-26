@@ -13,20 +13,29 @@ namespace NoughtsAndCrosses
 
         public Winner LastWinner = Winner.Continue;
         protected WhooseTurn turn = WhooseTurn.PlayerOne;
-        protected ObjectType playerType = ObjectType.Cross;
+        protected ObjectType playerType = ObjectType.NA;
 
         protected int width, height;
         protected const int boardSize = Global.BoardWidth / Global.TileSize;
 		protected const int tileSize = Global.TileSize;
 		
-
         protected Object[,] tiles = new Object[boardSize, boardSize];
-        protected Object indicator = new Cross(0, 0);
+        protected Object indicator;
 
         public GameBoard(int width, int height): base()
         {
             this.width = width;
             this.height = height;
+
+        }
+
+        protected void SetPlayerType(ObjectType type)
+        {
+            playerType = type;
+            if (playerType == ObjectType.Nought)
+                indicator = new Nought(0, 0);
+            else
+                indicator = new Cross(0, 0);
 
             indicator.Opacity = 200;
         }
@@ -68,18 +77,12 @@ namespace NoughtsAndCrosses
 
             indicator.Render(g);
         }
-
         
-
         protected override void MouseMove(Point location)
         {
             // Don't handle GUI clicks.
             if (location.Y >= height)
                 return;
-
-            //// Don't allow clicks if the AI is 'thinking'
-            //if (turn == WhooseTurn.PlayerTwo)
-            //    return;
 
             int snappedX = location.X / Global.TileSize;
             int snappedY = location.Y / Global.TileSize;
@@ -107,6 +110,36 @@ namespace NoughtsAndCrosses
 
             indicator.IndexX = snappedX;
             indicator.IndexY = snappedY;
+        }
+
+        /// <summary>
+        ///  Determines the type of object depending on player one's and player two's type
+        /// </summary>
+        protected void DeterminteObjectType(out Object obj, int ix, int iy)
+        {
+            if (turn == WhooseTurn.PlayerOne)
+            {
+                ObjectType playerType = PlayerType();
+                if (playerType == ObjectType.Nought)
+                    obj = new Nought(ix, iy);
+                else
+                    obj = new Cross(ix, iy);
+
+                return;
+            }
+            else if (turn == WhooseTurn.PlayerTwo)
+            {
+                ObjectType playerTwoType = PlayerTwoType();
+                if (playerTwoType == ObjectType.Nought)
+                    obj = new Nought(ix, iy);
+                else
+                    obj = new Cross(ix, iy);
+
+                return;
+            }
+
+            System.Diagnostics.Debug.Assert(false);
+            obj = null;
         }
 
         protected virtual bool SomebodyWon() { return false; }

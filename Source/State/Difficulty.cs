@@ -6,16 +6,28 @@ namespace NoughtsAndCrosses
 	public class Difficulty : State
 	{
 		private Label levelOne = new Label("Level One", Global.BoardCentre, Global.BoardCentre, Label.DefaultColor);
-		private Label unbeatable = new Label("UNBEATABLE", Global.BoardCentre, Global.BoardCentre + 55, Color.DarkRed);
+		private Label unbeatable = new Label("Maximum Difficulty", Global.BoardCentre, Global.BoardCentre + 55, Color.DarkRed);
 		private Label levelTwo = new Label("Level Two", Global.BoardCentre, Global.BoardCentre + 25, Label.DefaultColor);
-		
+        private Label back = new Label("Back", Global.BoardCentre, Global.BoardCentre + 150, Label.DefaultColor);
+
 		public Difficulty()
 		{
 			levelOne.SetButton(levelOneClicked);
-			unbeatable.SetButton(unbeatableClicked);
+			unbeatable.SetButton(unbeatableClicked, ButtonAnimation.HoverShake);
 			levelTwo.SetButton(levelTwoClicked);
+            back.SetButton(backClicked, ButtonAnimation.HoverUnderline);
 		}
-			                   
+
+        protected override void Reset()
+        {
+            back.ResetPosition();
+        }
+
+        private void backClicked()
+        {
+            GotoPreviousState();
+        }
+                
 		private void levelTwoClicked()
 		{
 			Global.AIDifficulty = 7;
@@ -42,6 +54,7 @@ namespace NoughtsAndCrosses
 			levelOne.Draw(g);
 			unbeatable.Draw(g);
 			levelTwo.Draw(g);
+            back.Draw(g);
 		}
 		
 		protected override void OnClick (Point location)
@@ -49,20 +62,22 @@ namespace NoughtsAndCrosses
 			levelOne.MouseClick(location);
 			unbeatable.MouseClick(location);
 			levelTwo.MouseClick(location);
+            back.MouseClick(location);
 		}
 		
 		protected override void MouseMove (Point location)
 		{
-			if(unbeatable.Contains(location)) {
-				unbeatable.MoveMove(location);
-				unbeatable.Underline();	
-			} else {
-				unbeatable.ResetFont();	
-			}
-			
-			levelOne.MoveMove(location);
-			levelTwo.MoveMove(location);
+            unbeatable.MouseMove(location);
+			levelOne.MouseMove(location);
+			levelTwo.MouseMove(location);
+            back.MouseMove(location);
 		}
-	}
+
+        protected override void Tick()
+        {
+            unbeatable.Tick();
+            back.Tick();
+        }
+    }
 }
 
